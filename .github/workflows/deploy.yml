@@ -20,7 +20,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # ─── BACKEND ──────────────────────────────────────────────
+      # ─── BACKEND SETUP ─────────────────────────────
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
@@ -32,7 +32,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      # ─── FRONTEND ─────────────────────────────────────────────
+      # ─── FRONTEND SETUP ────────────────────────────
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
@@ -44,15 +44,18 @@ jobs:
           npm install
           npm run build
 
-      # ─── DEPLOY TO EC2 ────────────────────────────────────────
-      - name: Copy files to EC2
+      # ─── DEPLOY TO EC2 ─────────────────────────────
+      - name: Copy build and backend to EC2
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_KEY }}
-          source: "./"
-          target: "/home/${{ secrets.EC2_USER }}/resume-parser-app"
+          source: |
+            frontend/build
+            backend
+            frontend/src/aws-exports.js
+          target: /home/${{ secrets.EC2_USER }}/resume-parser-app
 
       - name: SSH to EC2 and restart server
         uses: appleboy/ssh-action@v1.0.3
@@ -63,5 +66,5 @@ jobs:
           script: |
             cd ~/resume-parser-app/backend
             pip3 install -r requirements.txt
-            pkill uvicorn || true
+            pkill -f "uvicorn" || true
             nohup uvicorn main:app --host 0.0.0.0 --port 8000 &
