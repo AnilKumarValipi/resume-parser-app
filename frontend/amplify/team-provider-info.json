@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-resumeparser-dev-9830f-authRole",
+      "UnauthRoleArn": "arn:aws:iam::512672395252:role/amplify-resumeparser-dev-9830f-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::512672395252:role/amplify-resumeparser-dev-9830f-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-resumeparser-dev-9830f-deployment",
+      "UnauthRoleName": "amplify-resumeparser-dev-9830f-unauthRole",
+      "StackName": "amplify-resumeparser-dev-9830f",
+      "StackId": "arn:aws:cloudformation:us-east-1:512672395252:stack/amplify-resumeparser-dev-9830f/70fe4670-6712-11f0-bdbd-0eb332b34e17",
+      "AmplifyAppId": "ddws9gsy9aipb"
+    },
+    "categories": {
+      "auth": {
+        "resumeparser4dc18df0": {}
+      }
+    }
+  }
+}
